@@ -236,6 +236,21 @@ input[type=range]{width:100%;accent-color:var(--pred);margin:1.2rem 0 .3rem}
 .contrib .cr.sent .fillb{background:var(--leaf2)}
 .contrib .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 
+.gap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:2rem 0}
+.gap-card{background:var(--panel);border-radius:14px;padding:1.3rem 1.3rem 1.2rem}
+.gap-card h3{margin:.25rem 0 .5rem}
+.gap-card p{font-size:1rem;line-height:1.6;color:#C9D2D6;margin:0}
+.gap-k{font-family:var(--sans);font-size:.85rem;font-weight:700;color:var(--pred)}
+.tujuan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem}
+.tujuan{border-left:3px solid var(--pred);padding:.3rem 0 .3rem 1.1rem}
+.tujuan p{margin:.35rem 0 0;font-size:1.05rem}
+.tj-n{font-family:var(--sans);font-weight:700;color:var(--pred)}
+.batasan{max-width:70ch;margin-top:1.6rem}
+.saran-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1rem}
+.saran{background:var(--panel);border-radius:12px;padding:1.1rem 1.2rem;font-size:1rem;line-height:1.55;box-shadow:0 1px 0 var(--grid)}
+.saran b{display:block;font-family:var(--sans);color:var(--ink);margin-bottom:.35rem}
+.investor-note{margin-top:1.2rem;padding:1rem 1.2rem;border-left:3px solid var(--pred);background:var(--panel);border-radius:0 12px 12px 0;max-width:80ch}
+@media (max-width:900px){.gap-grid,.tujuan-grid,.saran-grid{grid-template-columns:1fr}}
 footer{padding:4rem 0 5rem;border-top:1px solid var(--grid);margin-top:3rem;font-family:var(--sans);font-size:.92rem;color:var(--muted)}
 footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
 footer strong{color:var(--ink);display:block;margin-bottom:.2rem}
@@ -267,9 +282,9 @@ footer strong{color:var(--ink);display:block;margin-bottom:.2rem}
   <div class="hero-chart" id="heroChart" aria-hidden="true"></div>
   <div class="hero-ticker" aria-hidden="true"><div class="t">ADRO</div><div class="v" id="heroLast"></div></div>
   <div class="wrap hero-inner">
-    <h1>Bisakah berita energi bersih membantu membaca harga saham batu bara?</h1>
-    <p class="lede">Sepuluh tahun harga saham PT Alamtri Resources Indonesia Tbk, 36.960 berita energi baru terbarukan, dan satu model Temporal Fusion Transformer yang belajar dari keduanya.</p>
-    <div class="byline"><strong>Wahyu Satrio Widodo</strong> (222212911)<br>Skripsi D-IV Komputasi Statistik, peminatan Sains Data, Politeknik Statistika STIS, 2026<br>Pembimbing: Dr. Robert Kurniawan, SST, M.Si.</div>
+    <h1>Memprediksi saham energi di tengah transisi</h1>
+    <p class="lede">Sektor energi Indonesia menghadapi volatilitas struktural dalam perjalanan menuju net zero emission 2060. Penelitian ini menguji apakah sentimen dari 36.960 berita energi baru terbarukan dan sepuluh indikator teknikal dapat membantu Temporal Fusion Transformer memprediksi harga saham PT Alamtri Resources Indonesia Tbk (ADRO).</p>
+    <div class="byline"><strong>Wahyu Satrio Widodo</strong> (222212911)<br><em>Prediksi Harga Saham Sektor Energi dalam Transisi Energi Baru Terbarukan Menggunakan Temporal Fusion Transformer Berbasis Technical Indicator dan Sentimen Berita</em><br>Skripsi D-IV Komputasi Statistik, peminatan Sains Data, Politeknik Statistika STIS, 2026 · Pembimbing: Dr. Robert Kurniawan, SST, M.Si.</div>
     <a class="scroll-cue" href="#babak1"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 1v12M2 8l5 5 5-5"/></svg>Gulir untuk mulai</a>
   </div>
 </header>
@@ -278,19 +293,41 @@ footer strong{color:var(--ink);display:block;margin-bottom:.2rem}
 <section class="dark chapter" id="babak1">
   <div class="wrap">
     <div class="intro prose">
-      <div class="chapter-tag"><b>1</b>Saham energi di tengah transisi</div>
-      <h2>Harga yang tidak pernah tenang</h2>
-      <p>ADRO dulu identik dengan batu bara. Ketika dunia bergerak ke energi baru terbarukan, harga sahamnya ikut terguncang oleh harga komoditas, kebijakan, dan keputusan korporasi. Volatilitas inilah yang membuat peramalannya sulit sekaligus menarik.</p>
+      <div class="chapter-tag"><b>1</b>Latar belakang</div>
+      <h2>Volatilitas struktural sektor energi</h2>
+      <p>Saham perbankan umumnya bergerak mengikuti siklus makroekonomi. Sektor energi menanggung risiko lain, yaitu risiko transisi iklim yang dapat menggeser nilai aset secara mendasar ketika kebijakan dan permintaan beralih ke energi bersih (Krueger et al., 2020). Indonesia menargetkan bauran energi terbarukan 23 persen pada 2025 dan net zero emission pada 2060 (IEA, 2022).</p>
+      <p>Penelitian ini mengambil PT Alamtri Resources Indonesia Tbk (ADRO), emiten berkapitalisasi besar di sektor energi yang aktif bertransisi ke energi baru terbarukan. Harga penutupannya selama 2016–2025 memperlihatkan mengapa saham energi sulit diramalkan.</p>
     </div>
     <div class="scrolly" data-scrolly="price">
       <div class="steps">
-        <div class="step" data-step="0"><div class="card"><h3>2016–2020: bergerak di bawah Rp2.000</h3><p>Selama lima tahun pertama, harga penutupan ADRO bergerak di rentang ratusan hingga sekitar dua ribu rupiah. Data penelitian dimulai 5 Januari 2016.</p></div></div>
-        <div class="step" data-step="1"><div class="card"><h3>2022: lonjakan harga komoditas</h3><p>Krisis energi global mendorong harga batu bara. Harga penutupan ADRO mencapai puncaknya <span class="num">Rp4.140</span> pada 7 Oktober 2022.</p></div></div>
-        <div class="step" data-step="2"><div class="card"><h3>28 November 2024: jatuh 24,8 persen dalam sehari</h3><p>Pemisahan anak usaha batu bara termal membuat harga turun dari <span class="num">Rp3.670</span> ke <span class="num">Rp2.760</span>, lalu ke <span class="num">Rp2.080</span> sehari kemudian. Diskontinuitas seperti ini tidak bisa ditebak dari pola harga saja.</p></div></div>
-        <div class="step" data-step="3"><div class="card"><h3>Pertanyaan penelitian</h3><p>Dengan <span class="num">2.434</span> hari perdagangan, apakah indikator teknikal dan sentimen berita dapat membantu model memprediksi harga penutupan esok hari, dan konfigurasi model seperti apa yang paling baik?</p></div></div>
+        <div class="step" data-step="0"><div class="card"><h3>2016–2020: bergerak di bawah Rp2.000</h3><p>Selama lima tahun pertama, harga penutupan ADRO bergerak dari ratusan rupiah hingga sekitar dua ribu rupiah. Data harga penelitian mencakup 2.464 hari perdagangan sejak 5 Januari 2016.</p></div></div>
+        <div class="step" data-step="1"><div class="card"><h3>2022: lonjakan saat krisis energi global</h3><p>Kenaikan harga komoditas energi mendorong ADRO ke puncak <span class="num">Rp4.140</span> pada 7 Oktober 2022. Guncangan seperti ini berasal dari pasar energi global, bukan dari kinerja emiten semata.</p></div></div>
+        <div class="step" data-step="2"><div class="card"><h3>28 November 2024: penyesuaian 24,8 persen</h3><p>Harga turun dari <span class="num">Rp3.670</span> ke <span class="num">Rp2.760</span> pada tanggal ex-dividen spesial yang terkait pelepasan anak usaha batu bara termal, lalu berlanjut ke <span class="num">Rp2.080</span> sehari kemudian. Aksi korporasi seperti ini tidak dapat dipelajari dari pola harga historis.</p></div></div>
+        <div class="step" data-step="3"><div class="card"><h3>Investor ritel menanggung risikonya</h3><p>Investor saham Indonesia mencapai <span class="num">10,14 juta</span> SID per Agustus 2026. Sebanyak 99,78 persen rekening milik individu, tetapi porsi nilai asetnya hanya 17,74 persen (KSEI, 2026). Salah menakar risiko menimpa porsi besar kekayaan mereka, sehingga dibutuhkan model yang akurat sekaligus dapat diinterpretasikan.</p></div></div>
       </div>
       <div class="sticky"><div class="fig" id="figPrice"></div><div class="fig-caption">Harga penutupan harian ADRO (rupiah), 2016–2025. Sumber: df_final.csv.</div></div>
     </div>
+  </div>
+</section>
+
+<!-- RUMUSAN -->
+<section class="dark chapter" id="rumusan" style="padding-top:2rem">
+  <div class="wrap">
+    <div class="prose">
+      <div class="chapter-tag"><b>2</b>Rumusan masalah dan tujuan</div>
+      <h2>Tiga celah yang dijawab penelitian ini</h2>
+      <p>Berita menggerakkan pasar secara instan. Pada 8 April 2025, IHSG anjlok 9,19 persen ke 5.912,06 pada menit awal perdagangan dan memicu trading halt, merespons tarif resiprokal 32 persen dari Amerika Serikat. Namun cara terbaik mengubah berita menjadi variabel prediksi, dan cara terbaik menyusun modelnya, belum disepakati.</p>
+    </div>
+    <div class="gap-grid">
+      <article class="gap-card"><div class="gap-k">Sentimen</div><h3>Leksikon atau Transformer?</h3><p>VADER transparan dan cepat, tetapi kamusnya berbahasa Inggris sehingga teks Indonesia harus diterjemahkan (Hutto &amp; Gilbert, 2014). FinBERT-Indonesia memahami terminologi keuangan Indonesia, tetapi komputasinya berat dan sulit dijelaskan (Maharani et al., 2023). Keduanya belum dibandingkan pada berita keuangan berbahasa Indonesia.</p></article>
+      <article class="gap-card"><div class="gap-k">Arsitektur</div><h3>Konfigurasi TFT belum diuji</h3><p>TFT mengungguli LSTM dengan MAE turun 40–50 persen (Thai et al., 2026) dan menilai kontribusi tiap variabel lewat Variable Selection Network. Namun aktivasi ELU dan inisialisasi Kaiming bawaannya (Lim et al., 2021) diadopsi tanpa diuji pada saham bervolatilitas tinggi.</p></article>
+      <article class="gap-card"><div class="gap-k">Evaluasi</div><h3>Optimasi dan validasi yang jujur</h3><p>Penyetelan hyperparameter manual tidak efisien, dan validasi acak membocorkan informasi masa depan. Penelitian ini memakai Optuna (TPE) dan walk-forward validation, sekaligus menguji apakah Median Pruner justru memangkas trial yang potensial.</p></article>
+    </div>
+    <div class="tujuan-grid">
+      <div class="tujuan"><span class="tj-n">Tujuan 1</span><p>Melakukan analisis sentimen komparatif antara VADER dan FinBERT-Indonesia pada berita EBT guna menetapkan alur ekstraksi sentimen yang paling representatif terhadap imbal hasil harian saham ADRO.</p></div>
+      <div class="tujuan"><span class="tj-n">Tujuan 2</span><p>Membangun dan menganalisis performa model prediksi harga saham berbasis TFT dengan mengeksplorasi pengaruh fungsi aktivasi, inisialisasi bobot, dan strategi pruning guna merumuskan konfigurasi paling optimal dalam kerangka walk-forward validation.</p></div>
+    </div>
+    <p class="small muted batasan">Batasan penelitian: harga penutupan harian ADRO 1 Januari 2016 – 31 Desember 2025, berita detikFinance, sepuluh indikator teknikal ditambah skor sentimen ber-lag satu hari, dan prediksi satu hari ke depan.</p>
   </div>
 </section>
 
@@ -298,16 +335,16 @@ footer strong{color:var(--ink);display:block;margin-bottom:.2rem}
 <section class="dark slate chapter" id="babak2">
   <div class="wrap">
     <div class="intro prose">
-      <div class="chapter-tag"><b>2</b>Membaca suasana berita</div>
+      <div class="chapter-tag"><b>3</b>Analisis sentimen</div>
       <h2>Dari 303 ribu artikel menjadi satu angka per hari</h2>
-      <p>Berita energi baru terbarukan dari detikFinance dikumpulkan, disaring, lalu diberi skor sentimen. Skor harian inilah yang kemudian menjadi salah satu masukan model.</p>
+      <p>Berita dikumpulkan dari detikFinance, portal berita dengan lalu lintas tertinggi di Indonesia menurut Similarweb dan AhrefsTop, sebanyak 303.257 artikel sepanjang 2016–2025. Korpus disaring, diberi skor sentimen dengan dua alur, lalu diringkas menjadi satu nilai per hari perdagangan.</p>
     </div>
     <div class="scrolly" data-scrolly="news">
       <div class="steps">
-        <div class="step" data-step="0"><div class="card"><h3>Penyaringan dua lapis</h3><p>Dari 58 kandidat kata kunci, 18 bertahan setelah diuji keterkaitannya dengan pergerakan harga ADRO. Frasa spesifik seperti <em>transisi energi</em> dan <em>tarif listrik</em> bertahan, sementara kata yang sering muncul seperti <em>pertamina</em> justru gugur.</p></div></div>
-        <div class="step" data-step="1"><div class="card"><h3>Skor harian VADER</h3><p>Setiap artikel diterjemahkan lalu diberi skor compound VADER antara −1 dan +1, kemudian dirata-rata per hari. Skor cenderung positif dengan rata-rata <span class="num">0,285</span>. Garis di samping menunjukkan rata-rata bergerak 30 hari.</p></div></div>
-        <div class="step" data-step="2"><div class="card"><h3>VADER melawan FinBERT-Indonesia</h3><p>Dua alur dibandingkan dengan enam pengujian keterkaitan terhadap imbal hasil harian. VADER unggul pada empat pengujian, termasuk semua uji yang memiliki hipotesis formal dan signifikan.</p></div></div>
-        <div class="step" data-step="3"><div class="card"><h3>Efeknya muncul tiga hari kemudian</h3><p>Kandungan informasi sentimen VADER memuncak pada lag tiga hari (MI <span class="num">0,0425</span>, p = 0,004), satu-satunya yang bertahan setelah koreksi Bonferroni. Encoder 30 hari pada model mencakup jeda ini sepenuhnya.</p></div></div>
+        <div class="step" data-step="0"><div class="card"><h3>Validasi kata kunci dua lapis</h3><p>Sebanyak 58 kandidat kata kunci dari lima kelompok tematik diuji dua lapis. Lapis pertama memastikan kata benar-benar hadir dan informatif (TF-IDF); lapis kedua menguji keterkaitannya dengan volatilitas dan imbal hasil ADRO (korelasi Spearman). Hasilnya 18 kata kunci: frasa spesifik seperti <em>transisi energi</em> dan <em>tarif listrik</em> bertahan, sedangkan kata populer seperti <em>pertamina</em> dan <em>esdm</em> gugur.</p></div></div>
+        <div class="step" data-step="1"><div class="card"><h3>Skor harian VADER</h3><p>Artikel diterjemahkan otomatis lalu diberi skor compound VADER antara −1 dan +1, dirata-rata per kalimat, lalu per hari. Artikel yang terbit saat bursa tutup dipetakan ke hari perdagangan berikutnya. Skor harian cenderung positif, dengan rata-rata <span class="num">0,278</span>.</p></div></div>
+        <div class="step" data-step="2"><div class="card"><h3>VADER melawan FinBERT-Indonesia</h3><p>Dua alur kerja dibandingkan: VADER pada teks terjemahan dan FinBERT-Indonesia pada teks sumber. Dari enam pengujian keterkaitan terhadap imbal hasil harian, VADER unggul pada empat dan menjadi satu-satunya yang signifikan pada seluruh uji berhipotesis formal. Simpulan ini berlaku pada tingkat alur kerja, bukan kemampuan intrinsik arsitekturnya.</p></div></div>
+        <div class="step" data-step="3"><div class="card"><h3>Efeknya muncul tiga hari kemudian</h3><p>Mutual information VADER memuncak pada lag tiga hari (<span class="num">0,0425</span>, p = 0,004), satu-satunya yang lolos koreksi Bonferroni, dan jeda ini tercakup encoder 30 hari. Namun akurasi arah sentimen (0,4429) di bawah baseline mayoritas (0,5567): sentimen membawa informasi besaran, bukan penentu arah.</p></div></div>
       </div>
       <div class="sticky"><div class="fig" id="figNews">
         <div class="view" data-v="0"><div class="funnel" id="funnel"></div></div>
@@ -329,14 +366,14 @@ footer strong{color:var(--ink);display:block;margin-bottom:.2rem}
 <section class="light chapter" id="babak3">
   <div class="wrap">
     <div class="prose">
-      <div class="chapter-tag"><b>3</b>Membangun model</div>
+      <div class="chapter-tag"><b>4</b>Pemodelan TFT</div>
       <h2>Temporal Fusion Transformer, dan dua belas cara menyusunnya</h2>
-      <p>TFT melihat 30 hari terakhir, memilih sendiri variabel mana yang penting, lalu memberi bobot perhatian pada hari-hari yang paling relevan sebelum menebak harga penutupan besok. Dari dua belas kandidat variabel, Optuna memilih enam untuk model terbaik.</p>
+      <p>TFT membaca 30 hari terakhir, memilih sendiri variabel yang penting lewat Variable Selection Network, lalu memberi bobot perhatian pada hari-hari paling relevan sebelum memprediksi harga penutupan esok hari. Optuna (TPE, 240 trial per konfigurasi) mencari hyperparameter sekaligus subset indikator, dengan harga penutupan dan sentimen sebagai fitur wajib. Model terbaik memakai enam variabel.</p>
     </div>
     <div class="block panel tft-diagram" id="tftDiagram"></div>
     <div class="prose">
-      <h3>Tiga pilihan desain, dua belas konfigurasi</h3>
-      <p>Tiga fungsi aktivasi (ELU, GELU, ReLU), dua strategi inisialisasi bobot (Kaiming, unit norm), dan dua strategi pruning Optuna disilangkan. Setiap konfigurasi dilatih dan diuji pada sepuluh fold. Pilih metrik untuk membandingkan, lalu klik kotak untuk melihat detailnya. Warna lebih gelap berarti galat lebih kecil.</p>
+      <h3>Desain faktorial 2 × 3 × 2</h3>
+      <p>Modifikasi dilakukan pada Gated Residual Network. Fungsi aktivasinya divariasikan antara ELU, GELU, dan ReLU; inisialisasi bobotnya antara Kaiming, yang menjaga varians sinyal antarlapisan (He et al., 2015), dan unit norm, yang menormalkan setiap baris bobot; ditambah dua strategi pruning. Setiap konfigurasi diuji pada sepuluh fold. Pilih metrik, lalu klik kotak untuk melihat detailnya; warna lebih gelap berarti galat lebih kecil.</p>
     </div>
     <div class="block panel">
       <div class="seg" role="group" aria-label="Metrik perbandingan" id="metricSeg">
@@ -353,7 +390,8 @@ footer strong{color:var(--ink);display:block;margin-bottom:.2rem}
       <div class="detail-box" id="cfgDetail" aria-live="polite"></div>
     </div>
     <div class="prose">
-      <p>ReLU dengan inisialisasi Kaiming tanpa pruning (K5) unggul di semua metrik galat data uji. Temuan lain yang lebih menarik: aktivasi dan inisialisasi saling berinteraksi. Kaiming selalu lebih baik daripada unit norm, tetapi selisihnya hanya 1,29 poin RMSE pada ELU dan melonjak menjadi 21,11 poin pada GELU. Pruning, sebaliknya, tidak berpengaruh sistematis.</p>
+      <p>K5, yaitu ReLU dengan Kaiming tanpa pruning, unggul di seluruh metrik galat data uji dan juga memiliki RMSE validasi terendah (179,83). Kaiming selalu lebih baik daripada unit norm dengan selisih rata-rata 11,72 poin RMSE, tetapi selisihnya hanya 1,29 poin pada ELU dan 21,11 poin pada GELU, sehingga peringkat ELU dan GELU berbalik. Artinya aktivasi dan inisialisasi berinteraksi dan harus dipilih bersamaan.</p>
+      <p>Pruning tidak berpengaruh sistematis: tiga pasangan konfigurasi membaik, tiga memburuk, dengan rata-rata selisih hanya +2,42 poin.</p>
     </div>
   </div>
 </section>
@@ -362,14 +400,15 @@ footer strong{color:var(--ink);display:block;margin-bottom:.2rem}
 <section class="light chapter" id="babak4" style="padding-top:2rem">
   <div class="wrap">
     <div class="prose">
-      <div class="chapter-tag"><b>4</b>Menguji dengan jujur</div>
-      <h2>Walk-forward: model selalu diuji pada masa depannya sendiri</h2>
-      <p>Data saham tidak boleh diacak. Setiap fold melatih model dengan data sampai titik tertentu, memvalidasi pada 51 hari berikutnya, lalu mengujinya pada 51 hari setelahnya. Jendela latih terus melebar dari 1.414 menjadi 2.332 hari.</p>
+      <div class="chapter-tag"><b>5</b>Validasi walk-forward</div>
+      <h2>Model selalu diuji pada masa depannya sendiri</h2>
+      <p>Data saham tidak boleh diacak. Setiap fold melatih model dengan data sampai titik tertentu, memakai 51 hari berikutnya untuk validasi dan early stopping, lalu menguji pada 51 hari setelahnya: 30 hari sebagai encoder dan 21 prediksi satu langkah ke depan. Jendela latih melebar dari 1.414 menjadi 2.332 hari.</p>
+      <p>Hyperparameter dipilih berdasarkan rata-rata RMSE validasi kesepuluh fold, sehingga yang terpilih adalah konfigurasi yang stabil lintas periode, bukan yang kebetulan bagus di satu periode.</p>
     </div>
     <div class="block panel"><svg class="wf" id="wfSvg" role="img" aria-label="Skema sepuluh fold walk-forward dan RMSE uji model K5 per fold"></svg>
-      <p class="fig-caption">Abu-abu: data latih. Gelap: validasi. Kuning: uji. Angka di kanan: RMSE uji K5 per fold (Tabel 41). Garis putus-putus: pemisahan anak usaha, 28 November 2024.</p></div>
+      <p class="fig-caption">Abu-abu: data latih. Gelap: validasi. Kuning: uji. Angka di kanan: RMSE uji K5 per fold. Garis putus-putus: penyesuaian harga ex-dividen terkait pemisahan anak usaha, 28 November 2024.</p></div>
     <div class="prose">
-      <p>Fold ke-6 adalah fold terbaik (RMSE uji <span class="num">44,77</span>, MAPE <span class="num">1,48%</span>), dan model dari fold inilah yang disimpan sebagai <code>model.ckpt</code> dan dipakai pada grafik berikutnya. Fold ke-8 dan ke-9 memburuk tajam karena periodenya memuat diskontinuitas harga akibat aksi korporasi, pola yang muncul seragam pada kedua belas konfigurasi.</p>
+      <p>Fold ke-6 memberikan hasil terbaik (RMSE uji <span class="num">44,77</span>, MAPE <span class="num">1,48%</span>), dan model dari fold inilah yang disimpan sebagai <code>model.ckpt</code> dan dipakai pada grafik berikutnya. Fold ke-8 dan ke-9 mengalami overfitting ekstrem (gap +2.151,8% dan +283,2%) karena periodenya memuat diskontinuitas harga akibat aksi korporasi. Pola ini seragam di kedua belas konfigurasi, sehingga sumbernya data, bukan kapasitas model. Semua fold tetap dilaporkan tanpa eliminasi.</p>
     </div>
   </div>
 </section>
@@ -378,9 +417,9 @@ footer strong{color:var(--ink);display:block;margin-bottom:.2rem}
 <section class="light chapter" id="babak5" style="padding-top:2rem">
   <div class="wrap">
     <div class="prose">
-      <div class="chapter-tag"><b>5</b>Prediksi</div>
+      <div class="chapter-tag"><b>6</b>Hasil prediksi</div>
       <h2>Aktual melawan prediksi, hari demi hari</h2>
-      <p>Garis kuning adalah prediksi satu hari ke depan dari model K5 fold ke-6 (<code>model.ckpt</code>) yang dijalankan pada setiap jendela 30 hari di df_final.csv. Area berwarna menandai data yang pernah dilihat model saat dilatih dan data yang benar-benar baru. Seret kotak di grafik kecil untuk memilih rentang sendiri.</p>
+      <p>Garis kuning adalah prediksi satu hari ke depan dari model terbaik K5 fold ke-6 (<code>model.ckpt</code>) yang dijalankan pada setiap jendela 30 hari di df_final.csv. Area berwarna menandai data yang pernah dilihat model saat dilatih dan data yang benar-benar baru. Seret kotak di grafik kecil untuk memilih rentang sendiri.</p>
     </div>
     <div class="block panel explorer">
       <div class="toolbar">
@@ -399,13 +438,14 @@ footer strong{color:var(--ink);display:block;margin-bottom:.2rem}
       <p class="range-note" id="rangeNote"></p>
     </div>
     <div class="prose">
-      <p>Pada periode uji, prediksi mengikuti harga aktual dengan rapat tetapi cenderung tertinggal satu langkah, ciri umum peramalan satu hari pada deret yang mendekati jalan acak. Pilih <em>2025</em> untuk melihat apa yang terjadi ketika model yang sama dipakai jauh setelah periode latihnya, melewati pemisahan anak usaha: galatnya membesar. Karena itulah walk-forward melatih ulang model di setiap fold.</p>
+      <p>Pada periode uji, prediksi mengikuti harga aktual dengan rapat tetapi cenderung tertinggal satu langkah, ciri umum peramalan satu hari pada deret yang mendekati jalan acak. Uji residu menunjukkan sembilan dari sepuluh fold berdistribusi normal dan enam dari sepuluh mendekati white noise.</p>
+      <p>Pilih <em>2025</em> untuk melihat apa yang terjadi ketika model yang sama dipakai jauh setelah periode latihnya, melewati penyesuaian harga November 2024: galatnya membesar. Karena itulah walk-forward melatih ulang model di setiap fold.</p>
     </div>
 
     <!-- anatomy -->
     <div class="prose" style="margin-top:4rem">
       <h3 style="font-size:1.6rem">Bedah satu prediksi</h3>
-      <p>Geser penggeser untuk memilih satu hari. Grafik kiri menunjukkan 30 hari yang dibaca model beserta bobot perhatiannya, dan panel kanan menunjukkan seberapa besar setiap variabel dipakai untuk prediksi hari itu.</p>
+      <p>Geser penggeser untuk memilih satu hari. Grafik kiri menunjukkan 30 hari yang dibaca model beserta bobot perhatiannya, dan panel kanan menunjukkan seberapa besar setiap variabel dipakai untuk prediksi hari itu. Bobot ini adalah ukuran alokasi perhatian model, bukan ukuran kausal.</p>
     </div>
     <div class="block panel" id="anatomy">
       <div class="anat-head">
@@ -427,16 +467,28 @@ footer strong{color:var(--ink);display:block;margin-bottom:.2rem}
 <section class="light chapter" id="temuan" style="padding-top:2rem">
   <div class="wrap">
     <div class="prose">
-      <div class="chapter-tag"><b>6</b>Yang dipelajari</div>
-      <h2>Lima temuan, termasuk yang tidak menyenangkan</h2>
+      <div class="chapter-tag"><b>7</b>Kesimpulan dan saran</div>
+      <h2>Jawaban atas dua tujuan penelitian</h2>
     </div>
     <div class="findings">
-      <div class="finding"><div class="big">3,15%<small>MAPE uji K5, rata-rata sepuluh fold</small></div><div><h3>Akurasi level harga sangat tinggi</h3><p>Dengan RMSE 102,70 dan sMAPE 3,14 persen, K5 berada jauh di bawah ambang sepuluh persen yang oleh Lewis (1982) digolongkan sebagai peramalan berakurasi sangat tinggi. Namun ini peramalan satu langkah dengan encoder berisi 30 observasi aktual, jadi tidak bisa dibandingkan langsung dengan peramalan multi-langkah.</p></div></div>
-      <div class="finding"><div class="big">48,10%<small>kontribusi harga penutupan</small></div><div><h3>Harga masa lalu tetap raja, sentimen setara satu indikator</h3><p>Rata-rata bobot Variable Selection Network sepuluh fold (Tabel 45). Garis tipis menunjukkan simpangan baku antarfold.</p><div class="contrib" id="contrib"></div></div></div>
-      <div class="finding"><div class="big">8,56%<small>kontribusi sentimen, peringkat 5 dari 6</small></div><div><h3>Sentimen kecil tetapi tidak pernah nol</h3><p>Lintas dua belas konfigurasi, kontribusi sentimen selalu berada di rentang 4,49 hingga 12,52 persen dan melampaui ambang 0,05 pada 59,2 persen fold. Keterkaitan bivariat yang lemah tidak berarti sentimen tidak berguna di dalam model multivariat yang non-linear.</p></div></div>
-      <div class="finding"><div class="big">47,97%<small>rata-rata akurasi arah, 12 konfigurasi</small></div><div><h3>Menebak arah masih seperti melempar koin</h3><p>DA uji berkisar 42,89 hingga 52,93 persen, hampir semuanya di dalam interval kepercayaan 95 persen sekitar tebakan acak. Ini konsisten dengan hipotesis pasar efisien bentuk semi-kuat: informasi publik cepat terserap ke harga.</p></div></div>
-      <div class="finding"><div class="big">2,4455<small>MASE uji K5</small></div><div><h3>Belum mengalahkan tebakan naif</h3><p>MASE di atas 1 berarti, secara rata-rata sepuluh fold, model belum lebih baik daripada menebak bahwa harga besok sama dengan hari ini. Galat terbesar datang dari fold yang memuat aksi korporasi. Penelitian selanjutnya disarankan menguji horizon yang lebih panjang dan menangani aksi korporasi secara eksplisit.</p></div></div>
+      <div class="finding"><div class="big">4 dari 6<small>pengujian dimenangi VADER (tujuan 1)</small></div><div><h3>VADER ditetapkan sebagai sumber sentimen</h3><p>Validasi dua lapis menghasilkan 18 kata kunci dan 36.960 artikel yang mencakup 98,94 persen hari perdagangan. VADER unggul pada MI (0,0356; p = 0,007), dCor (0,0610; p = 0,011), dan Lag-MI lag tiga hari (0,0425; p = 0,004). Keterkaitannya non-linear, non-monoton, dan kecil: sentimen membawa informasi besaran, bukan penentu arah.</p></div></div>
+      <div class="finding"><div class="big">3,15%<small>MAPE uji K5, rata-rata sepuluh fold (tujuan 2)</small></div><div><h3>K5 optimal: ReLU, Kaiming, tanpa pruning</h3><p>RMSE uji 102,70, sMAPE 3,14 persen, dan RMSE validasi terendah 179,83. MAPE jauh di bawah ambang 10 persen untuk peramalan berakurasi sangat tinggi (Lewis, 1982), dengan catatan ini peramalan satu langkah dengan encoder berisi 30 observasi aktual.</p></div></div>
+      <div class="finding"><div class="big">21,11<small>poin selisih Kaiming dan unit norm pada GELU</small></div><div><h3>Aktivasi dan inisialisasi berinteraksi</h3><p>Pada ELU selisihnya hanya 1,29 poin, sehingga keduanya tidak dapat ditetapkan secara terpisah. Median Pruner tidak berpengaruh sistematis: tiga pasangan membaik, tiga memburuk, dengan rata-rata +2,42 poin.</p></div></div>
+      <div class="finding"><div class="big">8 dari 10<small>fold dengan generalisasi wajar</small></div><div><h3>Masalah generalisasi terpolarisasi</h3><p>Fold ke-8 dan ke-9 mengalami overfitting ekstrem akibat diskontinuitas harga dari aksi korporasi, bukan karena kapasitas model yang berlebih.</p></div></div>
+      <div class="finding"><div class="big">48,10%<small>kontribusi harga penutupan</small></div><div><h3>Harga dominan, sentimen stabil</h3><p>Rata-rata bobot Variable Selection Network sepuluh fold; garis tipis menunjukkan simpangan baku antarfold. Sentimen berkontribusi 8,56 persen, setara rata-rata satu indikator (10,84 persen), berada di rentang 4,49–12,52 persen lintas konfigurasi, dan melampaui 0,05 pada 59,2 persen fold.</p><div class="contrib" id="contrib"></div></div></div>
+      <div class="finding"><div class="big">47,97%<small>rata-rata akurasi arah dua belas konfigurasi</small></div><div><h3>Level harga lebih andal daripada arah</h3><p>DA uji berkisar 42,89–52,93 persen, hampir semuanya di dalam interval kepercayaan 95 persen sekitar tebakan acak, dan MASE K5 sebesar 2,4455 belum mengungguli tebakan naif. Temuan ini konsisten dengan hipotesis pasar efisien bentuk semi-kuat (Fama, 1970).</p></div></div>
     </div>
+
+    <div class="prose" style="margin-top:3.5rem"><h3 style="font-size:1.6rem">Saran</h3></div>
+    <div class="saran-grid">
+      <div class="saran"><b>Replikasi multi-seed</b>Minimal tiga seed dan jendela uji lebih panjang; interval kepercayaan 95 persen RMSE K5 masih 76,44–128,95.</div>
+      <div class="saran"><b>Studi ablasi sentimen</b>Bandingkan konfigurasi identik dengan dan tanpa sentiment_lag1 untuk mengukur kontribusi marginalnya.</div>
+      <div class="saran"><b>Perluas sumber berita</b>Kontan, Bisnis Indonesia, CNBC Indonesia, media sosial, dan kata kunci spesifik emiten.</div>
+      <div class="saran"><b>Tangani aksi korporasi</b>Penyesuaian harga, pelatihan ulang adaptif, atau deteksi concept drift.</div>
+      <div class="saran"><b>Sempurnakan metrik</b>dCor terkoreksi bias atau jendela 120 hari, MASE pada imbal hasil, dan DA dengan sampel lebih besar.</div>
+      <div class="saran"><b>Perluas arsitektur dan objek</b>Horizon multi-langkah, attention alternatif, emiten energi lain, dan indeks IDX Energy.</div>
+    </div>
+    <p class="investor-note"><strong>Bagi investor:</strong> gunakan model sebagai pendukung estimasi level harga jangka sangat pendek, bukan sinyal arah transaksi, dan baca keluarannya berdampingan dengan keterbukaan informasi emiten.</p>
 
     <footer>
       <div class="cols">
@@ -445,7 +497,8 @@ footer strong{color:var(--ink);display:block;margin-bottom:.2rem}
         <div><strong>Model</strong>TFT K5 (ReLU, Kaiming, tanpa pruning), fold ke-6, hidden size 160, dropout 0,3, encoder 30 hari, horizon 1 hari.</div>
         <div><strong>Catatan</strong>Grafik prediksi dihitung langsung dari model.ckpt. Angka ringkasan sepuluh fold dikutip dari Bab IV dan V skripsi.</div>
       </div>
-      <p style="margin-top:2rem">Wahyu Satrio Widodo, Politeknik Statistika STIS, 2026. <a href="#top">Kembali ke atas</a></p>
+      <p style="margin-top:1.6rem"><strong style="display:inline">Rujukan utama:</strong> Lim et al. (2021); Hutto &amp; Gilbert (2014); Maharani et al. (2023); Thai et al. (2026); Wahyuddin et al. (2025); He et al. (2015); Akiba et al. (2019); Krueger et al. (2020); IEA (2022); KSEI (2026); Fama (1970).</p>
+      <p style="margin-top:1.2rem">Wahyu Satrio Widodo, Politeknik Statistika STIS, 2026. <a href="#top">Kembali ke atas</a></p>
     </footer>
   </div>
 </section>
@@ -562,7 +615,7 @@ function sizeOf(el){ const r=el.getBoundingClientRect(); return {W:Math.max(280,
 (function news(){
   const fig = document.getElementById('figNews');
   const views = [...fig.querySelectorAll('.view')];
-  const caps = ['Tahapan penyaringan korpus berita (Tabel 23).','Skor sentimen VADER harian: titik per hari, garis rata-rata bergerak 30 hari. Garis tipis: harga (skala kanan).','Ringkasan enam pengujian keterkaitan terhadap imbal hasil harian ADRO.','Mutual information antara sentimen pada hari t−lag dan imbal hasil hari t (Tabel 28).'];
+  const caps = ['Tahapan penyaringan korpus berita (Tabel 23).','Skor sentimen VADER harian (rata-rata 0,278): titik per hari, garis rata-rata bergerak 30 hari. Garis tipis: harga (skala kanan).','Ringkasan enam pengujian keterkaitan terhadap imbal hasil harian ADRO.','Mutual information antara sentimen pada hari t−lag dan imbal hasil hari t (Tabel 28).'];
   // funnel
   const fdata=[['Artikel hasil scraping',303257,'artikel'],['Dokumen valid',302678,'artikel'],['Artikel relevan (18 kata kunci)',36960,'artikel'],['Hari perdagangan dengan berita',2434,'hari']];
   const fun = d3.select('#funnel');
