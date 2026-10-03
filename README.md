@@ -3,29 +3,24 @@
 **Web story interaktif untuk skripsi** *Prediksi Harga Saham Sektor Energi dalam Transisi Energi Baru Terbarukan Menggunakan Temporal Fusion Transformer Berbasis Technical Indicator dan Sentimen Berita*.
 
 [![Demo](https://img.shields.io/badge/demo-GitHub%20Pages-003060)](https://wahyusw813.github.io/web-story-skripsi/)
-![Python](https://img.shields.io/badge/python-3.10%2B-3776AB)
 ![D3.js](https://img.shields.io/badge/D3.js-v7-F9A03C)
 ![Skripsi](https://img.shields.io/badge/skripsi-Politeknik%20Statistika%20STIS%202026-FF914D)
 
-Web story ini menyajikan hasil penelitian tentang prediksi harga penutupan saham PT Alamtri Resources Indonesia Tbk (ADRO) dalam bentuk narasi interaktif, dari latar belakang hingga kesimpulan. Seluruh grafik prediksi dihitung langsung dari model terbaik penelitian (`model.ckpt`) dan diverifikasi terhadap metadata model.
+Web story ini menyajikan hasil penelitian tentang prediksi harga penutupan saham PT Alamtri Resources Indonesia Tbk (ADRO) dalam bentuk narasi interaktif, dari latar belakang hingga kesimpulan. Seluruh grafik prediksi dihitung langsung dari model terbaik penelitian dan diverifikasi terhadap metadata model.
 
 **Demo daring:** https://wahyusw813.github.io/web-story-skripsi/
-
-![Halaman pembuka web story](docs/img/01-pembuka.jpg)
 
 ---
 
 ## Daftar isi
 
 - [Fitur](#fitur)
-- [Tangkapan layar](#tangkapan-layar)
+- [Isi repositori](#isi-repositori)
 - [Ringkasan penelitian](#ringkasan-penelitian)
 - [Hasil utama](#hasil-utama)
 - [Verifikasi model](#verifikasi-model)
-- [Arsitektur](#arsitektur)
+- [Alur kerja](#alur-kerja)
 - [Menjalankan secara lokal](#menjalankan-secara-lokal)
-- [Struktur proyek](#struktur-proyek)
-- [Deploy ke GitHub Pages](#deploy-ke-github-pages)
 - [Keterbatasan dan penafian](#keterbatasan-dan-penafian)
 - [Sitasi](#sitasi)
 - [Penulis](#penulis)
@@ -40,13 +35,15 @@ Web story ini menyajikan hasil penelitian tentang prediksi harga penutupan saham
 - **Matriks 12 konfigurasi** yang dapat diklik dan **diagram walk-forward 10 fold**.
 - **Satu file HTML mandiri**: tanpa server dan tanpa basis data, responsif untuk desktop dan ponsel, serta mendukung mode terang dan gelap.
 
-## Tangkapan layar
+## Isi repositori
 
-| Rumusan masalah dan tujuan | Penjelajah prediksi |
+| File | Keterangan |
 |---|---|
-| ![Rumusan masalah dan tujuan](docs/img/02-rumusan-masalah.jpg) | ![Penjelajah prediksi](docs/img/03-penjelajah-prediksi.jpg) |
+| [`index.html`](index.html) | Web story dalam satu file: HTML, CSS, JavaScript (D3.js v7), dan seluruh data prediksi tertanam di dalamnya. File inilah yang ditayangkan oleh GitHub Pages. |
+| [`prediksi_model_ckpt.csv`](prediksi_model_ckpt.csv) | 2.404 prediksi harga penutupan satu hari ke depan dari model terbaik, dengan kolom `time_idx`, `tanggal`, `aktual`, `prediksi`, dan `zona` (`latih`, `validasi`, `uji`, `setelah_uji`). |
+| `README.md` | Dokumen ini. |
 
-![Kesimpulan dan saran](docs/img/04-kesimpulan.jpg)
+Kode pelatihan model dan skrip pembangun halaman tidak disertakan dalam repositori ini.
 
 ## Ringkasan penelitian
 
@@ -75,7 +72,7 @@ Aktivasi dan inisialisasi terbukti berinteraksi: Kaiming selalu lebih baik, teta
 
 ## Verifikasi model
 
-Prediksi dihitung ulang dari `model.ckpt` dengan implementasi NumPy (`scripts/tft_numpy.py`), sehingga web story dapat dibangun tanpa PyTorch. Hasilnya dicocokkan dengan metadata model pada data uji fold 6:
+Prediksi pada web story dihitung ulang dari checkpoint model terbaik (K5, fold 6) dengan implementasi NumPy, lalu dicocokkan dengan metadata model pada data uji fold 6:
 
 | Metrik uji fold 6 | Metadata model | Hasil web story |
 |---|---|---|
@@ -84,84 +81,43 @@ Prediksi dihitung ulang dari `model.ckpt` dengan implementasi NumPy (`scripts/tf
 | sMAPE (%) | 1,4723 | 1,4763 |
 | MASE | 0,9911 | 0,9917 |
 
-Selisih di bawah 0,1% berasal dari perbedaan presisi float32 (PyTorch) dan float64 (NumPy). Pembanding dengan pytorch-forecasting tersedia di `scripts/generate_predictions_torch.py`.
+Selisih di bawah 0,1% berasal dari perbedaan presisi float32 (PyTorch) dan float64 (NumPy).
 
-## Arsitektur
+## Alur kerja
 
 ```mermaid
 flowchart LR
-    A[data/df_final.csv] --> C[scripts/generate_predictions.py]
-    B[data/model.ckpt] --> C
-    C -->|prediksi, attention, bobot VSN| D[web/data.js]
-    C --> E[dist/prediksi_model_ckpt.csv]
-    D --> F[scripts/build_single_html.py]
-    W[web/index.html] --> F
-    F --> G[dist/index.html]
-    F --> H[docs/index.html]
-    H --> I[GitHub Pages]
+    A[Data harga, indikator teknikal, dan sentimen] --> C[Inferensi offline model TFT K5]
+    B[Checkpoint model terbaik] --> C
+    C --> D[Prediksi, attention, dan bobot VSN]
+    C --> G[prediksi_model_ckpt.csv]
+    D --> E[index.html satu file]
+    E --> F[GitHub Pages]
 ```
 
-Inferensi model dijalankan sekali secara offline. Halaman web hanya membaca hasilnya, sehingga dapat di-hosting di layanan statis mana pun.
+Inferensi model dijalankan sekali secara offline. Hasilnya ditanam di dalam `index.html`, sehingga situs dapat ditayangkan di layanan statis seperti GitHub Pages tanpa server.
 
 ## Menjalankan secara lokal
 
-Prasyarat: Python 3.10 atau lebih baru.
+Unduh atau clone repositori, lalu buka `index.html` di peramban. Koneksi internet diperlukan untuk memuat pustaka D3.js dan font.
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install -r requirements.txt  # hanya numpy dan pandas
-
-python scripts/generate_predictions.py   # prediksi, verifikasi, dan web/data.js
-python scripts/build_single_html.py      # dist/index.html dan docs/index.html
+git clone https://github.com/wahyusw813/web-story-skripsi.git
+cd web-story-skripsi
+python -m http.server 8000   # buka http://localhost:8000
 ```
 
-Buka `dist/index.html` di peramban. Untuk mengedit halaman, jalankan server lokal agar `web/data.js` terbaca:
+Data prediksi juga dapat dianalisis langsung, misalnya dengan pandas:
 
-```bash
-cd web && python -m http.server 8000   # buka http://localhost:8000
+```python
+import pandas as pd
+
+df = pd.read_csv("prediksi_model_ckpt.csv")
+uji = df[df["zona"] == "uji"]   # 20 prediksi data uji fold 6
+print(uji[["tanggal", "aktual", "prediksi"]])
 ```
 
-Panduan lengkap setiap langkah tersedia di [docs/PANDUAN.md](docs/PANDUAN.md).
-
-## Struktur proyek
-
-```
-web-story-skripsi/
-├── data/
-│   ├── df_final.csv              # harga, indikator teknikal, dan skor sentimen VADER
-│   ├── model.ckpt                # checkpoint TFT K5 fold 6
-│   ├── model_metadata.json       # metrik acuan untuk verifikasi
-│   └── encoder_history.csv       # 30 hari encoder terakhir
-├── scripts/
-│   ├── ckpt_reader.py            # membaca checkpoint tanpa PyTorch
-│   ├── tft_numpy.py              # forward pass TFT versi NumPy
-│   ├── generate_predictions.py   # prediksi + verifikasi + ekspor data
-│   ├── generate_predictions_torch.py  # pembanding pytorch-forecasting (opsional)
-│   ├── build_single_html.py      # menggabungkan halaman menjadi satu file
-│   └── patch_text_skripsi.py     # teks setiap bagian, selaras dengan Bab I–V
-├── web/
-│   ├── index.html                # sumber halaman (HTML, CSS, JavaScript, D3.js)
-│   └── data.js                   # data hasil generate_predictions.py
-├── dist/
-│   ├── index.html                # versi satu file untuk unggah manual
-│   └── prediksi_model_ckpt.csv   # tabel aktual vs prediksi
-├── docs/
-│   ├── index.html                # versi satu file untuk GitHub Pages
-│   ├── PANDUAN.md                # panduan langkah demi langkah
-│   └── img/                      # tangkapan layar README
-├── CITATION.cff
-├── requirements.txt
-└── README.md
-```
-
-## Deploy ke GitHub Pages
-
-1. Unggah seluruh isi folder ini ke repositori GitHub.
-2. Buka **Settings → Pages**, pilih **Deploy from a branch**, branch `main`, folder `/docs`, lalu simpan.
-3. Setelah satu sampai dua menit, situs tersedia di `https://wahyusw813.github.io/<nama-repositori>/`.
-
-Setiap kali halaman diubah, jalankan ulang `python scripts/build_single_html.py`, lalu unggah `docs/index.html` yang baru.
+Situs daring diperbarui otomatis oleh GitHub Pages setiap kali `index.html` di branch `main` diganti.
 
 ## Keterbatasan dan penafian
 
