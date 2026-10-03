@@ -22,7 +22,6 @@ Web story ini menyajikan hasil penelitian tentang prediksi harga penutupan saham
 - [Alur kerja](#alur-kerja)
 - [Menjalankan secara lokal](#menjalankan-secara-lokal)
 - [Keterbatasan dan penafian](#keterbatasan-dan-penafian)
-- [Sitasi](#sitasi)
 - [Penulis](#penulis)
 
 ---
@@ -125,24 +124,6 @@ Situs daring diperbarui otomatis oleh GitHub Pages setiap kali `index.html` di b
 - Model memprediksi **level harga satu hari ke depan**. Akurasi arahnya setara tebakan acak, dan MASE rata-rata 10 fold (2,4455) belum mengungguli tebakan naif.
 - Model fold 6 dilatih dengan data hingga Januari 2024. Prediksi setelah periode uji dibuat tanpa pelatihan ulang, sehingga galatnya membesar, terutama setelah penyesuaian harga akibat aksi korporasi pada November 2024.
 - Bobot attention dan Variable Selection Network menunjukkan alokasi perhatian model, bukan hubungan sebab-akibat.
-
-## Sitasi
-
-Jika merujuk proyek ini, mohon kutip skripsinya:
-
-> Widodo, W. S. (2026). *Prediksi Harga Saham Sektor Energi dalam Transisi Energi Baru Terbarukan Menggunakan Temporal Fusion Transformer Berbasis Technical Indicator dan Sentimen Berita* [Skripsi]. Politeknik Statistika STIS.
-
-```bibtex
-@thesis{widodo2026prediksi,
-  author      = {Widodo, Wahyu Satrio},
-  title       = {Prediksi Harga Saham Sektor Energi dalam Transisi Energi Baru Terbarukan
-                 Menggunakan Temporal Fusion Transformer Berbasis Technical Indicator
-                 dan Sentimen Berita},
-  type        = {Skripsi},
-  institution = {Politeknik Statistika STIS},
-  year        = {2026}
-}
-```
 
 ## Penulis
 
