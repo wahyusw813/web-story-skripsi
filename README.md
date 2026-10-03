@@ -2,14 +2,14 @@
 
 **Web story interaktif untuk skripsi** *Prediksi Harga Saham Sektor Energi dalam Transisi Energi Baru Terbarukan Menggunakan Temporal Fusion Transformer Berbasis Technical Indicator dan Sentimen Berita*.
 
-[![Demo](https://img.shields.io/badge/demo-GitHub%20Pages-003060)](https://USERNAME.github.io/web-story-skripsi/)
+[![Demo](https://img.shields.io/badge/demo-GitHub%20Pages-003060)](https://wahyusw813.github.io/web-story-skripsi/)
 ![Python](https://img.shields.io/badge/python-3.10%2B-3776AB)
 ![D3.js](https://img.shields.io/badge/D3.js-v7-F9A03C)
 ![Skripsi](https://img.shields.io/badge/skripsi-Politeknik%20Statistika%20STIS%202026-FF914D)
 
 Web story ini menyajikan hasil penelitian tentang prediksi harga penutupan saham PT Alamtri Resources Indonesia Tbk (ADRO) dalam bentuk narasi interaktif, dari latar belakang hingga kesimpulan. Seluruh grafik prediksi dihitung langsung dari model terbaik penelitian (`model.ckpt`) dan diverifikasi terhadap metadata model.
 
-**Demo daring:** https://USERNAME.github.io/web-story-skripsi/
+**Demo daring:** https://wahyusw813.github.io/web-story-skripsi/
 
 ![Halaman pembuka web story](docs/img/01-pembuka.jpg)
 
@@ -159,7 +159,7 @@ web-story-skripsi/
 
 1. Unggah seluruh isi folder ini ke repositori GitHub.
 2. Buka **Settings → Pages**, pilih **Deploy from a branch**, branch `main`, folder `/docs`, lalu simpan.
-3. Setelah satu sampai dua menit, situs tersedia di `https://<username>.github.io/<nama-repositori>/`.
+3. Setelah satu sampai dua menit, situs tersedia di `https://wahyusw813.github.io/<nama-repositori>/`.
 
 Setiap kali halaman diubah, jalankan ulang `python scripts/build_single_html.py`, lalu unggah `docs/index.html` yang baru.
 
